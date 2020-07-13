@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentManager fm = getSupportFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment)
+        final SupportMapFragment mapFragment = (SupportMapFragment)
                 fm.findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -52,39 +52,29 @@ public class MainActivity extends AppCompatActivity {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                btn1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                btn2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                btn3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
 
                 LatLng spore = new LatLng(1.352083,103.819839);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(spore,15));
-                LatLng north = new LatLng(1.445575, 103.785163);
+                final LatLng north = new LatLng(1.445575, 103.785163);
                 Marker rp = map.addMarker(new MarkerOptions()
                 .position(north)
                 .title("HQ - North")
                 .snippet("9 Woodlands Ave 9, Singapore 738964 \nOperating hours: 10am-5pm\nTel:65433456\n")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.)))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.star)));
 
-                LatLng central = new LatLng(1.436003, 103.785366);
+                final LatLng central = new LatLng(1.436003, 103.785366);
+                Marker cp = map.addMarker(new MarkerOptions()
+                .position(central)
+                .title("Causeway Point")
+                .snippet("1 Woodlands Square, Singapore 738099\nOperating hours: 11am-8pm\nTel:67788652\n")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-                LatLng east = new LatLng(1.437634, 103.804110);
+                final LatLng east = new LatLng(1.437634, 103.804110);
+                Marker of = map.addMarker(new MarkerOptions()
+                .position(east)
+                .title("Office")
+                .snippet("693 Woodlands Avenue 6, Singapore 730693\nOperating hours: 9am-5pm\nTel:66776677\n")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
                 UiSettings ui = map.getUiSettings();
                 ui.setZoomControlsEnabled(true);
@@ -98,6 +88,27 @@ public class MainActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(MainActivity.this,
                             new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
                 }
+
+                btn1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(north, 15));
+                    }
+                });
+
+                btn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(central, 15));
+                    }
+                });
+
+                btn3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(east, 15));
+                    }
+                });
             }
         });
     }
